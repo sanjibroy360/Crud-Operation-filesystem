@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const url = require('url');
+const qs = require('querystring');
 var PORT = process.env.PORT || 3000;
 
 var server = http.createServer(handleRequest);
@@ -76,8 +77,7 @@ function handleRequest(req, res) {
 
             // Update
             
-            console.log(parsedUrl);
-            var username = JSON.parse(store).username;
+            var username = parsedUrl.query.username;
             path += username + '.json';
             
             fs.open(path, 'r+', (err, fd) => {
@@ -106,8 +106,10 @@ function handleRequest(req, res) {
             
             // Delete
 
-            var username = JSON.parse(store).username;
+            var username = parsedUrl.query.username;
             path += username + '.json';
+            
+            console.log(store);
 
             fs.unlink(path, (err) => {
                 if(err) {
