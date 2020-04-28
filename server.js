@@ -10,6 +10,7 @@ function handleRequest(req, res) {
     var store = "";
     var parsedUrl = url.parse(req.url, true);
     var path = __dirname + '/users/'; 
+    var username = JSON.parse(store).username;
 
     req.on('data', (chunk) => {
         store += chunk;
@@ -19,7 +20,6 @@ function handleRequest(req, res) {
         
         if(parsedUrl.pathname === '/users' && req.method === 'POST') {
             
-            var username = JSON.parse(store).username;
             path += username + '.json';
             
             // Create
@@ -52,7 +52,7 @@ function handleRequest(req, res) {
             
             // Read
 
-            var username = JSON.parse(store).username;
+            
             path += username + '.json';
 
             fs.open(path, 'r', (err, fd) => {
